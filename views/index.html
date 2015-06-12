@@ -1,0 +1,28 @@
+{% extends './layout/base.html' %}
+
+{% block content %}
+  <div layout="column" layout-fill>
+    <md-toolbar class="md-hue-2">
+      <div class="md-toolbar-tools">
+        <span>Empreenda</span>
+        <span flex></span>
+
+        <small class="md-subhead">Telefonica | VIVO</small>
+      </div>
+    </md-toolbar>
+
+    <!-- List of the teams -->
+    <md-content data-ng-controller="ListController" layout-padding>
+      <md-toolbar class="md-hue-1 mb" data-ng-repeat="team in teams">
+        <div class="md-toolbar-tools">
+          <span>{[{ team.name }]}</span>
+          <span flex></span>
+
+          <md-button class="md-fab md-mini" data-ng-click="vote($index)">
+            <md-icon class="material-icons" aria-label="editar">editar</md-icon>
+          </md-button>
+        </div>
+      </md-toolbar>
+    </md-content>
+  </div>
+{% endblock content %}
