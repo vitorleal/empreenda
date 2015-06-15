@@ -13,7 +13,11 @@
 
     <!-- List of the teams -->
     <md-content class="list-content" data-ng-controller="ListController" layout-padding>
-      <md-toolbar class="mb" data-ng-repeat="team in teams">
+      <div data-ng-show="loader" layout="row" layout-align="space-around">
+        <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+      </div>
+
+      <md-toolbar data-ng-hide="loader" class="mb" data-ng-repeat="team in teams">
         <div class="md-toolbar-tools">
           <span>
             <strong>{[{ team.name }]} </strong>

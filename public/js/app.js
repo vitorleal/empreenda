@@ -43,8 +43,11 @@ app.controller('LoginController', function ($scope, $mdDialog, login) {
 app.controller('ListController', function ($scope, $mdDialog, teams) {
   var getTeams = teams.getAll();
 
+  $scope.loader = true;
+
   getTeams.then(function (resp) {
     $scope.teams = resp.teams;
+    $scope.loader = false;
   });
 
   // Calculate total

@@ -30,8 +30,9 @@ swig.setDefaults({ cache: false });
 app.get('/', routes.index);
 
 // Login
-app.get('/login', routes.login.get);
-app.post('/login', routes.login.post);
+app.get('/login', routes.auth.login.get);
+app.post('/login', routes.auth.login.post);
+app.get('/logout', routes.auth.logout);
 
 // Team
 app.get('/team/all', routes.team.getAll);

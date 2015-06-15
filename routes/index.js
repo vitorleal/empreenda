@@ -5,7 +5,7 @@ routes.index = function index (req, res) {
   res.render('index');
 };
 
-routes.login = require('./login');
+routes.auth = require('./auth');
 routes.user = require('./user');
 routes.vote = require('./vote');
 routes.team = require('./team');

@@ -1,9 +1,10 @@
 var db   = require('../db'),
-    User = require('../db/user');
+    User = require('../db/user'),
+    routes = {};
 
 
 // Login routes
-var login = {
+routes.login = {
   get: function login (req, res) {
     res.render('login');
   },
@@ -29,6 +30,14 @@ var login = {
   }
 };
 
+// Logout
+routes.logout = function logout (req, res) {
+  if (req.cookies.hasOwnProperty('userId')) {
+    res.clearCookie('userId');
+  }
 
-exports = module.exports = login;
+  res.redirect('/');
+};
+
+exports = module.exports = routes;
 
