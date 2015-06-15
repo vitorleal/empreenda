@@ -1,0 +1,21 @@
+.dialog-title {
+  margin-left: 20px;
+}
+
+.dialog-subtitle {
+  margin-right: 20px;
+}
+
+.list-content {
+  padding: 30px 60px;
+}
+
+.dialog-content {
+  padding: 20px 40px;
+  overflow: auto;
+}
+
+.mb {
+  margin-bottom: 5px;
+}
+

@@ -21,6 +21,18 @@ app.controller('ListController', function ($scope, $mdDialog, teams) {
     $scope.teams = resp.teams;
   });
 
+  // Calculate total
+  $scope.calculateTotal = function (team) {
+    var total = team.points.originality +
+      team.points.presentation +
+      team.points.potential +
+      team.points.viability +
+      team.points.appeal;
+
+    return total;
+  };
+
+
   // Vote in a team
   $scope.vote = function (id) {
     var dialog = $mdDialog.show({
@@ -45,13 +57,39 @@ app.controller('ListController', function ($scope, $mdDialog, teams) {
 // Vote Controller
 function VoteController ($scope, $mdDialog, team) {
   $scope.team = team;
+  $scope.points = {};
 
+  // Initial points value
+  $scope.points.originality = team.points.originality;
+  $scope.points.presentation = team.points.presentation;
+  $scope.points.potential = team.points.potential;
+  $scope.points.viability = team.points.viability;
+  $scope.points.appeal = team.points.appeal;
+
+  // Calculate the total points
+  $scope.calculateTotal = function () {
+    var total = $scope.points.originality +
+      $scope.points.presentation +
+      $scope.points.potential +
+      $scope.points.viability +
+      $scope.points.appeal;
+
+    return total;
+  };
+
+  $scope.calculateTotal();
+
+  // Cancel voting
   $scope.cancel = function () {
     $mdDialog.cancel();
   };
 
-  $scope.answer = function (answer) {
-    $mdDialog.hide(answer);
+  // Save voting
+  $scope.save = function () {
+    $mdDialog.hide({
+      team: team,
+      points: $scope.points
+    });
   };
 }
 
