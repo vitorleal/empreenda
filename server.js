@@ -14,7 +14,7 @@ var express      = require('express'),
 app.use([
   express.static('public'),
   bodyParser.json(),
-  cookieParser(),
+  cookieParser('emprendaCookieSecret'),
   middleware.userId()
 ]);
 
