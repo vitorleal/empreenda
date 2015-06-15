@@ -7,7 +7,6 @@ var express      = require('express'),
     swig         = require('swig'),
     db           = require('./db'),
     session      = require('express-session'),
-    connectMongo = require('connect-mongo')(session),
     app          = express();
 
 
@@ -17,13 +16,7 @@ var express      = require('express'),
 app.use([
   express.static('public'),
   bodyParser.json(),
-  session({
-    secret: 'empreendaCookieSecret',
-    store: new connectMongo({
-      url: configs.MONGOURL,
-      ttl: 7 * 24 * 60 * 60
-    })
-  }),
+  session(db.sessionManager),
   cookieParser(),
   middleware.userId()
 ]);
