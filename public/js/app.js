@@ -4,6 +4,7 @@ var app = angular.module('empreendaApp', ['ngMaterial']);
 app.config(function ($mdThemingProvider, $interpolateProvider) {
   $mdThemingProvider.theme('default');
 
+  // Interpolate angular symbols as {[{ }]}
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
 });
@@ -12,6 +13,31 @@ app.config(function ($mdThemingProvider, $interpolateProvider) {
 /** ------------
    Controller
 ---------------- */
+
+// Login Controller
+app.controller('LoginController', function ($scope, $mdDialog, login) {
+  $scope.auth = function () {
+    var auth = login.auth($scope.email);
+
+    auth.then(function (resp) {
+      if (!resp.auth) {
+        var alert = $mdDialog.alert({
+          parent: angular.element(document.body),
+          title: 'Email não encontrado',
+          content: 'O email '+ $scope.email +' não está cadastrado na plataforma.',
+          ok: 'fechar'
+        });
+
+        $mdDialog.show(alert);
+      }
+
+      if (resp.auth) {
+        window.location.replace('/');
+      }
+    });
+  };
+});
+
 
 // Main Controller
 app.controller('ListController', function ($scope, $mdDialog, teams) {
@@ -23,22 +49,15 @@ app.controller('ListController', function ($scope, $mdDialog, teams) {
 
   // Calculate total
   $scope.calculateTotal = function (team) {
-    var total = team.points.originality +
-      team.points.presentation +
-      team.points.potential +
-      team.points.viability +
-      team.points.appeal;
-
-    return total;
+    return 0;
   };
-
 
   // Vote in a team
   $scope.vote = function (id) {
     var dialog = $mdDialog.show({
-      controller : VoteController,
+      controller: VoteController,
       templateUrl: './templates/vote.tmpl.html',
-      parent     : angular.element(document.body),
+      parent : angular.element(document.body),
       locals: {
         team: $scope.teams[id]
       }
@@ -55,7 +74,7 @@ app.controller('ListController', function ($scope, $mdDialog, teams) {
 
 
 // Vote Controller
-function VoteController ($scope, $mdDialog, team) {
+function VoteController ($scope, $mdDialog, vote, team) {
   $scope.team = team;
   $scope.points = {};
 
@@ -98,9 +117,27 @@ function VoteController ($scope, $mdDialog, team) {
     Factory
 ---------------- */
 
+// Login
+app.factory('login', function ($http) {
+  var path = './login',
+      factory = {};
+
+  // Login by email
+  factory.auth = function (email) {
+    var login = $http.post(path, { email: email }).then(function (resp) {
+      return resp.data;
+    });
+
+    return login;
+  };
+
+  return factory;
+});
+
+
 // Teams
 app.factory('teams', function ($http) {
-  var path    = './teams',
+  var path    = './team/all',
       factory = {};
 
   // Get list of teams
@@ -110,6 +147,23 @@ app.factory('teams', function ($http) {
     });
 
     return teams;
+  };
+
+  return factory;
+});
+
+
+// Vote
+app.factory('vote', function ($http) {
+  var path    = './vote',
+      factory = {};
+
+  factory.get = function (user, team) {
+    var vote = $http.get(path + '/' + user + '/' + team).then(function (resp) {
+      return resp.data;
+    });
+
+    return vote;
   };
 
   return factory;

@@ -14,7 +14,7 @@ app.use([
   express.static('public'),
   bodyParser.json(),
   cookieParser(),
-  middleware.sessionId()
+  middleware.userId()
 ]);
 
 app.set('view engine', 'html');
@@ -29,8 +29,16 @@ swig.setDefaults({ cache: false });
 // Index
 app.get('/', routes.index);
 
-// Teams
-app.get('/teams', routes.teams.getAll);
+// Login
+app.get('/login', routes.login.get);
+app.post('/login', routes.login.post);
+
+// Team
+app.get('/team/all', routes.team.getAll);
+app.post('/team', routes.team.post);
+
+// User
+app.post('/user', routes.user.post);
 
 // Vote
 app.get('/vote', routes.vote.get);

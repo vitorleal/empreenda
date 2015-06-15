@@ -13,7 +13,7 @@
 
     <!-- List of the teams -->
     <md-content class="list-content" data-ng-controller="ListController" layout-padding>
-      <md-toolbar class="md-hue-1 mb" data-ng-repeat="team in teams">
+      <md-toolbar class="mb" data-ng-repeat="team in teams">
         <div class="md-toolbar-tools">
           <span>
             <strong>{[{ team.name }]} </strong>
@@ -27,3 +27,4 @@
     </md-content>
   </div>
 {% endblock content %}
+

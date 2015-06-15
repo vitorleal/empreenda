@@ -1,0 +1,26 @@
+{% extends './layout/base.html' %}
+
+{% block content %}
+  <div layout="column" layout-fill>
+    <md-toolbar class="md-hue-2">
+      <div class="md-toolbar-tools">
+        <span>EMPREENDA</span>
+        <span flex></span>
+
+        <small class="md-subhead"><img src="img/logo.png" width="140" alt="Telefonica | VIVO"></small>
+      </div>
+    </md-toolbar>
+
+    <!-- List of the teams -->
+    <md-content class="login-content" data-ng-controller="LoginController" layout-padding>
+      <md-input-container class="mb" flex>
+        <label>Email</label>
+        <input type="email" ng-model="email">
+      </md-input-container>
+
+      <md-input-container>
+        <md-button class="md-primary md-raised" data-ng-click="auth()" flex>Entrar</md-button>
+      </md-input-container>
+    </md-content>
+  </div>
+{% endblock content %}

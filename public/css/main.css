@@ -6,13 +6,17 @@
   margin-right: 20px;
 }
 
+.dialog-content {
+  padding: 20px 40px;
+  overflow: auto;
+}
+
 .list-content {
   padding: 30px 60px;
 }
 
-.dialog-content {
-  padding: 20px 40px;
-  overflow: auto;
+.login-content {
+  padding: 30px 22%;
 }
 
 .mb {
