@@ -4,6 +4,7 @@ var express      = require('express'),
     cookieParser = require('cookie-parser'),
     middleware   = require('./middleware'),
     swig         = require('swig'),
+    db           = require('./db'),
     app          = express();
 
 
@@ -21,6 +22,9 @@ app.set('view engine', 'html');
 app.engine('html', swig.renderFile);
 app.set('view cache', false);
 swig.setDefaults({ cache: false });
+
+// Connect db
+db.connect();
 
 
 /* ---------------
