@@ -1,10 +1,13 @@
 var express      = require('express'),
     routes       = require('./routes'),
+    configs      = require('./configs'),
     bodyParser   = require('body-parser'),
     cookieParser = require('cookie-parser'),
     middleware   = require('./middleware'),
     swig         = require('swig'),
     db           = require('./db'),
+    session      = require('express-session'),
+    connectMongo = require('connect-mongo')(session),
     app          = express();
 
 
@@ -14,7 +17,14 @@ var express      = require('express'),
 app.use([
   express.static('public'),
   bodyParser.json(),
-  cookieParser('emprendaCookieSecret'),
+  session({
+    secret: 'empreendaCookieSecret',
+    store: new connectMongo({
+      url: configs.MONGOURL,
+      ttl: 7 * 24 * 60 * 60
+    })
+  }),
+  cookieParser(),
   middleware.userId()
 ]);
 

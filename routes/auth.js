@@ -15,7 +15,7 @@ routes.login = {
       if (user) {
         // Save the user id in the cookies
         res.cookie('userId', user._id, {
-          expires: new Date(Date.now() + (10 * 600 * 100000)),
+          expires: new Date(Date.now() + (7 * 24 * 60 * 60)),
           httpOnly: true
         });
 
