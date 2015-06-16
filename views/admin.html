@@ -1,0 +1,38 @@
+{% extends './layout/base.html' %}
+
+{% block appJs %}
+  <script src="js/appAdmin.js"></script>
+{% endblock appJs %}
+
+{% block app %}empreendaAppAdmin{% endblock app %}
+
+{% block content %}
+  <div class="content" layout="column" layout-fill>
+    <md-toolbar class="md-hue-2">
+      <div class="md-toolbar-tools">
+        <span>EMPREENDA - Administração</span>
+
+        <span flex></span>
+
+        <small class="md-subhead"><img src="img/logo.png" width="140" alt="Telefonica | VIVO"></small>
+      </div>
+    </md-toolbar>
+
+    <!-- List of the teams -->
+    <md-content class="list-content" ng-controller="ListController" layout-padding>
+      <div data-ng-show="loader" layout="row" layout-align="space-around">
+        <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+      </div>
+
+      <md-toolbar data-ng-hide="loader" class="mb" data-ng-repeat="team in teams">
+        <div class="md-toolbar-tools">
+          <span>
+            <strong>{[{ $index + 1 }]}° {[{ team.team.name }]} - {[{ team.points }]} pontos</strong>
+          </span>
+        </div>
+      </md-toolbar>
+
+    </md-content>
+  </div>
+{% endblock content %}
+

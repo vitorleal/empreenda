@@ -50,6 +50,10 @@ app.post('/user', routes.user.post);
 app.get('/vote', routes.vote.get);
 app.post('/vote', routes.vote.post);
 
+// Admin
+app.get('/admin', routes.admin.get);
+app.get('/admin/data', routes.admin.data);
+
 
 // Start server
 var server = app.listen(process.env.PORT || 3000, function () {

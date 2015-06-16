@@ -14,10 +14,11 @@
     <script src="js/libs/angular-animate.min.js"></script>
     <script src="js/libs/angular-aria.min.js"></script>
     <script src="js/libs/angular-material.min.js"></script>
-    <script src="js/app.js"></script>
+
+    {% block appJs %}<script src="js/app.js"></script>{% endblock %}
   </head>
 
-  <body data-ng-app="empreendaApp">
+  <body data-ng-app="{% block app %}empreendaApp{% endblock %}">
     {% block content %}{% endblock %}
   </body>
 

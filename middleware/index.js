@@ -4,6 +4,11 @@ var middleware = {};
 // Get user id
 middleware.userId = function userId () {
   return function (req, res, next) {
+    // If is admin url ignore user id cookie
+    if (/\/admin/.test(req.url)) {
+      return next();
+    }
+
     // If no user authenticated redirect to login page
     if (!req.cookies.hasOwnProperty('userId') && req.url !== '/login') {
       res.redirect('/login');

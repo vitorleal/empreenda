@@ -1,7 +1,7 @@
 var app = angular.module('empreendaApp', ['ngMaterial']);
 
 // Config
-app.config(function ($mdThemingProvider, $interpolateProvider) {
+app.config(function ($interpolateProvider) {
   // Interpolate angular symbols as {[{ }]}
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');

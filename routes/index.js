@@ -12,6 +12,7 @@ routes.auth = require('./auth');
 routes.user = require('./user');
 routes.vote = require('./vote');
 routes.team = require('./team');
+routes.admin = require('./admin');
 
 // Export module
 exports = module.exports = routes;
