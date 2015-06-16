@@ -46,14 +46,16 @@ app.controller('LoginController', function ($scope, $mdDialog, login) {
 app.controller('HeaderController', function ($scope, $mdDialog) {
   // Logout user
   $scope.logout = function (ev) {
-    var confirm = $mdDialog.confirm();
-    confirm.title('Deseja sair do sistema?');
-    confirm.content('Tem certeza que deseja sair do sistema?');
-    confirm.ok('Sim');
-    confirm.cancel('Não');
-    confirm.targetEvent(ev);
+    var confirm = $mdDialog.confirm({
+      title: 'Deseja sair do sistema?',
+      content: 'Tem certeza que deseja sair do sistema?',
+      ok: 'Sim',
+      cancel: 'Não',
+      targetEvent: ev
+    });
 
     var dialog = $mdDialog.show(confirm);
+
     dialog.then(function () {
       window.location.replace('/logout');
     });
