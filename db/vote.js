@@ -4,10 +4,12 @@ var mongoose = require("mongoose");
 // Default vote schema
 var voteSchema = new mongoose.Schema({
   team: {
-    type: mongoose.Schema.Types.ObjectId
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Team'
   },
   user: {
-    type: mongoose.Schema.Types.ObjectId
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   },
   points: {
     originality: {

@@ -20,6 +20,7 @@ app.use([
   middleware.userId()
 ]);
 
+// View engine
 app.set('view engine', 'html');
 app.engine('html', swig.renderFile);
 app.set('view cache', false);
