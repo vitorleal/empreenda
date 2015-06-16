@@ -98,7 +98,7 @@ app.controller('ListController', function ($scope, $mdDialog, teams, votes) {
     // Create the vote dialog
     var dialog = $mdDialog.show({
       controller: VoteController,
-      templateUrl: './templates/vote.tmpl.html',
+      templateUrl: 'dialog-vote.html',
       parent: angular.element(document.querySelector('.content')),
       locals: {
         team: team,
