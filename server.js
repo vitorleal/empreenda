@@ -1,6 +1,5 @@
 var express      = require('express'),
     routes       = require('./routes'),
-    configs      = require('./configs'),
     bodyParser   = require('body-parser'),
     cookieParser = require('cookie-parser'),
     middleware   = require('./middleware'),
