@@ -2,8 +2,6 @@ var app = angular.module('empreendaApp', ['ngMaterial']);
 
 // Config
 app.config(function ($mdThemingProvider, $interpolateProvider) {
-  $mdThemingProvider.theme('default');
-
   // Interpolate angular symbols as {[{ }]}
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
@@ -101,7 +99,7 @@ app.controller('ListController', function ($scope, $mdDialog, teams, votes) {
       templateUrl: 'dialog-vote.html',
       parent: angular.element(document.querySelector('.content')),
       locals: {
-        team: team,
+        team: team
       }
     });
 

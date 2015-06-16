@@ -23,8 +23,6 @@ app.use([
 // View engine
 app.set('view engine', 'html');
 app.engine('html', swig.renderFile);
-app.set('view cache', false);
-swig.setDefaults({ cache: false });
 
 // Connect db
 db.connect();
