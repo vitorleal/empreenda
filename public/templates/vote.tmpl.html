@@ -10,27 +10,27 @@
     <p layout="row">
       <label>Originalidade</label> <span flex></span> <span>{[{ points.originality }]} ponto<span ng-if="points.originality > 1">s</span></span>
     </p>
-    <md-slider md-discrete ng-model="points.originality" step="1" min="0" max="5"></md-slider>
+    <md-slider aria-label="originalidade" md-discrete ng-model="points.originality" step="1" min="0" max="5"></md-slider>
 
     <p layout="row">
       <label>Apresentação / Pitch</label> <span flex></span> <span>{[{ points.presentation }]} ponto<span ng-if="points.presentation > 1">s</span></span>
     </p>
-    <md-slider md-discrete ng-model="points.presentation" step="1" min="0" max="5"></md-slider>
+    <md-slider aria-label="apresentação" md-discrete ng-model="points.presentation" step="1" min="0" max="5"></md-slider>
 
     <p layout="row">
       <label>Potencial da Idéia</label> <span flex></span> <span>{[{ points.potential }]} ponto<span ng-if="points.potential > 1">s</span></span>
     </p>
-    <md-slider md-discrete ng-model="points.potential" step="1" min="0" max="5"></md-slider>
+    <md-slider aria-label="potencial" md-discrete ng-model="points.potential" step="1" min="0" max="5"></md-slider>
 
     <p layout="row">
       <label>Viabilidade Econômica</label> <span flex></span> <span>{[{ points.viability }]} ponto<span ng-if="points.viability > 1">s</span></span>
     </p>
-    <md-slider md-discrete ng-model="points.viability" step="1" min="0" max="5"></md-slider>
+    <md-slider aria-label="viabilidade" md-discrete ng-model="points.viability" step="1" min="0" max="5"></md-slider>
 
     <p layout="row">
       <label>Apelo Comercial</label><span flex></span><span>{[{ points.appeal }]} ponto<span ng-if="points.appeal > 1">s</span></span>
     </p>
-    <md-slider md-discrete ng-model="points.appeal" step="1" min="0" max="5"></md-slider>
+    <md-slider aria-label="apelo comercial" md-discrete ng-model="points.appeal" step="1" min="0" max="5"></md-slider>
   </md-dialog-content>
 
   <div class="md-actions" layout="row" class="md-padding">

@@ -18,7 +18,16 @@ var team = {
     res.send({ saved: true });
   },
   getAll: function getAllTeams (req, res) {
-    Team.find({}).sort('order').exec(function (err, result) {
+    Team.find({}).populate({
+      path: 'votes',
+      match: {
+        user: req.cookies.userId
+      },
+      select: 'points',
+      options: {
+        limit: 1
+      }
+    }).sort('order').exec(function (err, result) {
       return res.send({ teams: result });
     });
   }

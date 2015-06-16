@@ -19,6 +19,10 @@
   padding: 30px 22%;
 }
 
+md-backdrop.md-opaque.md-default-theme {
+  background-color: rgba(0, 0, 0, .7);
+}
+
 .mb {
   margin-bottom: 5px;
 }

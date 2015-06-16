@@ -19,8 +19,10 @@ app.controller('LoginController', function ($scope, $mdDialog, login) {
   $scope.auth = function () {
     var auth = login.auth($scope.email);
 
+    // Try to authenticate the user by email
     auth.then(function (resp) {
       if (!resp.auth) {
+        // If user not found show alert message
         var alert = $mdDialog.alert({
           parent: angular.element(document.body),
           title: 'Email não encontrado',
@@ -31,6 +33,7 @@ app.controller('LoginController', function ($scope, $mdDialog, login) {
         $mdDialog.show(alert);
       }
 
+      // If user exist redirect to the main content
       if (resp.auth) {
         window.location.replace('/');
       }
@@ -39,37 +42,77 @@ app.controller('LoginController', function ($scope, $mdDialog, login) {
 });
 
 
+// Header Controller
+app.controller('HeaderController', function ($scope, $mdDialog) {
+  // Logout user
+  $scope.logout = function (ev) {
+    var confirm = $mdDialog.confirm();
+    confirm.title('Deseja sair do sistema?');
+    confirm.content('Tem certeza que deseja sair do sistema?');
+    confirm.ok('Sim');
+    confirm.cancel('Não');
+    confirm.targetEvent(ev);
+
+    var dialog = $mdDialog.show(confirm);
+    dialog.then(function () {
+      window.location.replace('/logout');
+    });
+  };
+});
+
+
 // Main Controller
-app.controller('ListController', function ($scope, $mdDialog, teams) {
+app.controller('ListController', function ($scope, $mdDialog, teams, votes) {
   var getTeams = teams.getAll();
 
+  // Show loader
   $scope.loader = true;
 
+  // get the teams data
   getTeams.then(function (resp) {
     $scope.teams = resp.teams;
     $scope.loader = false;
   });
 
   // Calculate total
-  $scope.calculateTotal = function (team) {
-    return 0;
+  $scope.calculateTotal = function (votes) {
+    if (votes && votes.length) {
+      var points = votes[0].points,
+          total  = points.originality +
+            points.presentation +
+            points.potential +
+            points.viability +
+            points.appeal;
+
+      return total;
+
+    } else {
+      return 0;
+    }
   };
 
   // Vote in a team
-  $scope.vote = function (id) {
+  $scope.openDialog = function (team) {
+    // Create the vote dialog
     var dialog = $mdDialog.show({
       controller: VoteController,
       templateUrl: './templates/vote.tmpl.html',
-      parent : angular.element(document.body),
+      parent : angular.element(document.querySelector('.content')),
       locals: {
-        team: $scope.teams[id]
+        team: team,
       }
     });
 
-    dialog.then(function (answer) {
-      console.log('You said the information was "' + answer + '".');
+    // Returning from the dialog confirm
+    dialog.then(function (data) {
+      var getTeams = teams.getAll();
+      // get the teams data
+      getTeams.then(function (resp) {
+        $scope.teams = resp.teams;
+      });
 
     }, function () {
+      // If the cancel button clicked
       console.log('You cancelled the dialog.');
     });
   };
@@ -77,16 +120,18 @@ app.controller('ListController', function ($scope, $mdDialog, teams) {
 
 
 // Vote Controller
-function VoteController ($scope, $mdDialog, vote, team) {
+function VoteController ($scope, $mdDialog, votes, team) {
   $scope.team = team;
-  $scope.points = {};
 
-  // Initial points value
-  $scope.points.originality = team.points.originality;
-  $scope.points.presentation = team.points.presentation;
-  $scope.points.potential = team.points.potential;
-  $scope.points.viability = team.points.viability;
-  $scope.points.appeal = team.points.appeal;
+  var points  = (team.votes && team.votes.length) ? team.votes[0].points : null;
+
+  $scope.points = {
+    originality: (points) ? points.originality : 0,
+    presentation: (points) ? points.presentation : 0,
+    potential: (points) ? points.potential : 0,
+    viability: (points) ? points.viability : 0,
+    appeal : (points) ? points.appeal : 0
+  };
 
   // Calculate the total points
   $scope.calculateTotal = function () {
@@ -108,9 +153,11 @@ function VoteController ($scope, $mdDialog, vote, team) {
 
   // Save voting
   $scope.save = function () {
-    $mdDialog.hide({
-      team: team,
-      points: $scope.points
+    var vote = votes.post(team._id, $scope.points);
+
+    vote.then(function () {
+      // after saving close the dialog
+      $mdDialog.hide();
     });
   };
 }
@@ -138,7 +185,7 @@ app.factory('login', function ($http) {
 });
 
 
-// Teams
+// Team
 app.factory('teams', function ($http) {
   var path    = './team/all',
       factory = {};
@@ -157,12 +204,20 @@ app.factory('teams', function ($http) {
 
 
 // Vote
-app.factory('vote', function ($http) {
+app.factory('votes', function ($http) {
   var path    = './vote',
       factory = {};
 
-  factory.get = function (user, team) {
-    var vote = $http.get(path + '/' + user + '/' + team).then(function (resp) {
+  factory.get = function (teamId) {
+    var vote = $http.get(path + '?teamId=' + teamId).then(function (resp) {
+      return resp.data;
+    });
+
+    return vote;
+  };
+
+  factory.post = function (teamId, points) {
+    var vote = $http.post(path, { teamId: teamId, points: points }).then(function (resp) {
       return resp.data;
     });
 

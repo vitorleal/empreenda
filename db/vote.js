@@ -1,7 +1,19 @@
 var mongoose = require("mongoose");
 
 
-// Default vote schema
+// Vote schema
+//
+// {
+//   team: ObjectId from Team
+//   user: ObjectId from User
+//   points: Object
+//     originality: Int,
+//     presentation: Int,
+//     potential: Int,
+//     viability: Int,
+//     appeal: Int
+// }
+//
 var voteSchema = new mongoose.Schema({
   team: {
     type: mongoose.Schema.Types.ObjectId,

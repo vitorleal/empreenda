@@ -1,7 +1,13 @@
 var mongoose = require("mongoose");
 
 
-// Default user schema
+// User schema
+//
+// {
+//   name: String,
+//   email: String
+// }
+//
 var userSchema = new mongoose.Schema({
   name: {
     trim: true,

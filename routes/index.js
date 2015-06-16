@@ -1,8 +1,11 @@
-var routes = {};
+var routes = {},
+    User   = require('../db/user');
 
 // Index route
 routes.index = function index (req, res) {
-  res.render('index');
+  User.findById(req.cookies.userId, function (err, user) {
+    res.render('index', { user: user });
+  });
 };
 
 routes.auth = require('./auth');

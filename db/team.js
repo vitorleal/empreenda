@@ -1,7 +1,14 @@
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 
 
-// Default team schema
+// Team schema
+//
+// {
+//   name: String,
+//   order: Int,
+//   votes: Array of Votes
+// }
+//
 var teamSchema = new mongoose.Schema({
   name: {
     trim: true,
@@ -10,7 +17,11 @@ var teamSchema = new mongoose.Schema({
   order: {
     default: 0,
     type: Number
-  }
+  },
+  votes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Vote'
+  }]
 });
 
 // Team model
