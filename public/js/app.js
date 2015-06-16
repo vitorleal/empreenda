@@ -97,7 +97,7 @@ app.controller('ListController', function ($scope, $mdDialog, teams, votes) {
     var dialog = $mdDialog.show({
       controller: VoteController,
       templateUrl: './templates/vote.tmpl.html',
-      parent : angular.element(document.querySelector('.content')),
+      parent: angular.element(document.querySelector('.content')),
       locals: {
         team: team,
       }
@@ -110,10 +110,6 @@ app.controller('ListController', function ($scope, $mdDialog, teams, votes) {
       getTeams.then(function (resp) {
         $scope.teams = resp.teams;
       });
-
-    }, function () {
-      // If the cancel button clicked
-      console.log('You cancelled the dialog.');
     });
   };
 });
@@ -123,14 +119,14 @@ app.controller('ListController', function ($scope, $mdDialog, teams, votes) {
 function VoteController ($scope, $mdDialog, votes, team) {
   $scope.team = team;
 
-  var points  = (team.votes && team.votes.length) ? team.votes[0].points : null;
+  var points = (team.votes && team.votes.length) ? team.votes[0].points : null;
 
   $scope.points = {
     originality: (points) ? points.originality : 0,
     presentation: (points) ? points.presentation : 0,
     potential: (points) ? points.potential : 0,
     viability: (points) ? points.viability : 0,
-    appeal : (points) ? points.appeal : 0
+    appeal: (points) ? points.appeal : 0
   };
 
   // Calculate the total points
