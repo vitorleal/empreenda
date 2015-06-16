@@ -39,5 +39,5 @@ var voteSchema = new mongoose.Schema({
 var Vote = mongoose.model('Vote', voteSchema);
 
 
-exports = module.exports = User;
+exports = module.exports = Vote;
 
