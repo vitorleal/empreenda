@@ -31,9 +31,31 @@ app.controller('ListController', function ($scope, teams) {
 
 
 /** ------------
+   Directive
+---------------- */
+app.directive('pointLabel', function () {
+  return {
+    restrict: 'E',
+    replace: true,
+    template: '<span>{{ value }}</span>',
+    scope: {
+      data: '='
+    },
+    link: function (scope, element, attrs) {
+      if (scope.data == 1) {
+        scope.value = scope.data + ' ponto';
+
+      } else {
+        scope.value = scope.data + ' pontos';
+      }
+    }
+  };
+});
+
+
+/** ------------
     Factory
 ---------------- */
-
 // Teams
 app.factory('teams', function ($http) {
   var path    = './admin/data',

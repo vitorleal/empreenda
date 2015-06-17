@@ -9,32 +9,32 @@
 
     <md-dialog-content class="dialog-content" layout-padding>
       <p layout="row">
-        <label>Originalidade</label> <span flex></span> <span>{[{ points.originality }]} ponto<span ng-if="points.originality > 1 || points.originality == 0">s</span></span>
+        <label>Originalidade</label> <span flex></span> <point-label data="points.originality"></point-label>
       </p>
       <md-slider aria-label="originalidade" md-discrete ng-model="points.originality" step="1" min="0" max="5"></md-slider>
 
       <p layout="row">
-        <label>Apresentação / Pitch</label> <span flex></span> <span>{[{ points.presentation }]} ponto<span ng-if="points.presentation > 1 || points.presentation == 0">s</span></span>
+        <label>Apresentação / Pitch</label> <span flex></span> <point-label data="points.presentation"></point-label>
       </p>
       <md-slider aria-label="apresentação" md-discrete ng-model="points.presentation" step="1" min="0" max="5"></md-slider>
 
       <p layout="row">
-        <label>Potencial da Idéia</label> <span flex></span> <span>{[{ points.potential }]} ponto<span ng-if="points.potential > 1 || points.potential == 0">s</span></span>
+        <label>Potencial da Idéia</label> <span flex></span> <point-label data="points.potential"></point-label>
       </p>
       <md-slider aria-label="potencial" md-discrete ng-model="points.potential" step="1" min="0" max="5"></md-slider>
 
       <p layout="row">
-        <label>Viabilidade Econômica</label> <span flex></span> <span>{[{ points.viability }]} ponto<span ng-if="points.viability > 1 || points.viability == 0">s</span></span>
+        <label>Viabilidade Econômica</label> <span flex></span> <point-label data="points.viability"></point-label>
       </p>
       <md-slider aria-label="viabilidade" md-discrete ng-model="points.viability" step="1" min="0" max="5"></md-slider>
 
       <p layout="row">
-        <label>Apelo Comercial</label><span flex></span><span>{[{ points.appeal }]} ponto<span ng-if="points.appeal > 1 || points.appeal == 0">s</span></span>
+        <label>Apelo Comercial</label><span flex></span> <point-label data="points.appeal"></point-label>
       </p>
       <md-slider aria-label="apelo comercial" md-discrete ng-model="points.appeal" step="1" min="0" max="5"></md-slider>
 
       <p layout="row">
-        <label>Aderência a Telefonica Vivo</label><span flex></span><span>{[{ points.adherence }]} ponto<span ng-if="points.adherence > 1 || points.adherence == 0">s</span></span>
+        <label>Aderência a Telefonica Vivo</label><span flex></span> <point-label data="points.adherence"></point-label>
       </p>
       <md-slider aria-label="aderência" md-discrete ng-model="points.adherence" step="1" min="0" max="5"></md-slider>
     </md-dialog-content>

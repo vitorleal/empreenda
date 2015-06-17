@@ -163,9 +163,33 @@ function VoteController ($scope, $mdDialog, votes, team) {
 
 
 /** ------------
+   Directive
+---------------- */
+app.directive('pointLabel', function () {
+  return {
+    restrict: 'E',
+    replace: true,
+    template: '<span>{{ value }}</span>',
+    scope: {
+      data: '='
+    },
+    link: function (scope, element, attrs) {
+      scope.$watch('data', function (oldVal, newVal) {
+        if (scope.data == 1) {
+          scope.value = scope.data + ' ponto';
+
+        } else {
+          scope.value = scope.data + ' pontos';
+        }
+      });
+    }
+  };
+});
+
+
+/** ------------
     Factory
 ---------------- */
-
 // Login
 app.factory('login', function ($http) {
   var path = './login',
