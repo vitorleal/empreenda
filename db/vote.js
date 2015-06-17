@@ -43,6 +43,10 @@ var voteSchema = new mongoose.Schema({
     appeal: {
       default: 0,
       type: Number
+    },
+    adherence: {
+      default: 0,
+      type: Number
     }
   }
 });

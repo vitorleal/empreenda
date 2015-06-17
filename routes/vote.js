@@ -23,7 +23,8 @@ var vote = {
           presentation: 0,
           potential: 0,
           viability: 0,
-          appeal: 0
+          appeal: 0,
+          adherence: 0
         }
       });
     });

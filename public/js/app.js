@@ -82,7 +82,8 @@ app.controller('ListController', function ($scope, $mdDialog, teams, votes) {
             points.presentation +
             points.potential +
             points.viability +
-            points.appeal;
+            points.appeal +
+            points.adherence;
 
       return total;
 
@@ -126,7 +127,8 @@ function VoteController ($scope, $mdDialog, votes, team) {
     presentation: (points) ? points.presentation : 0,
     potential: (points) ? points.potential : 0,
     viability: (points) ? points.viability : 0,
-    appeal: (points) ? points.appeal : 0
+    appeal: (points) ? points.appeal : 0,
+    adherence: (points) ? points.adherence : 0
   };
 
   // Calculate the total points
@@ -135,7 +137,8 @@ function VoteController ($scope, $mdDialog, votes, team) {
       $scope.points.presentation +
       $scope.points.potential +
       $scope.points.viability +
-      $scope.points.appeal;
+      $scope.points.appeal +
+      $scope.points.adherence;
 
     return total;
   };

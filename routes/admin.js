@@ -32,6 +32,9 @@ routes.data = function adminData (req, res) {
       },
       appeal: {
         $sum: '$points.appeal'
+      },
+      adherence: {
+        $sum: '$points.adherence'
       }
     }
   }, {
@@ -53,13 +56,17 @@ routes.data = function adminData (req, res) {
       appeal: {
         $add: '$appeal'
       },
+      adherence: {
+        $add: '$adherence'
+      },
       points: {
         $add: [
           '$originality',
           '$presentation',
           '$potential',
           '$viability',
-          '$appeal'
+          '$appeal',
+          '$adherence'
         ]
       }
     }
@@ -77,3 +84,4 @@ routes.data = function adminData (req, res) {
 
 
 exports = module.exports = routes;
+
