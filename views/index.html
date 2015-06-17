@@ -23,10 +23,12 @@
 
       <md-toolbar data-ng-hide="loader" class="mb" data-ng-repeat="team in teams">
         <div class="md-toolbar-tools">
-          <span>
-            <strong>{[{ team.name }]} </strong>
-            <small data-ng-if="calculateTotal(team.votes)"> - {[{ calculateTotal(team.votes) }]} ponto<span data-ng-if="calculateTotal(team.votes) > 1">s</span></small>
-          </span>
+          <md-button class="md-fab md-mini md-accent mr" data-ng-click="openDialog(team)" aria-label="Comment">
+            <small>{[{ calculateTotal(team.votes) }]}</small>
+          </md-button>
+
+          <span>{[{ team.name }]}</span>
+
           <span flex></span>
 
           <md-button class="md-raised" data-ng-click="openDialog(team)">Votar</md-button>
