@@ -23,8 +23,16 @@ md-backdrop.md-opaque.md-default-theme {
   background-color: rgba(255, 255, 255, .6);
 }
 
+.points-content span {
+  padding: 10px 12px;
+}
+
 .mb {
   margin-bottom: 5px;
+}
+
+.mbb {
+  margin-bottom: 10px;
 }
 
 .mr {

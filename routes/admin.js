@@ -38,6 +38,21 @@ routes.data = function adminData (req, res) {
     $project: {
       _id: 0,
       team: 1,
+      originality: {
+        $add: '$originality'
+      },
+      presentation: {
+        $add: '$presentation'
+      },
+      potential: {
+        $add: '$potential'
+      },
+      viability: {
+        $add: '$viability'
+      },
+      appeal: {
+        $add: '$appeal'
+      },
       points: {
         $add: [
           '$originality',
