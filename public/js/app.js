@@ -207,14 +207,7 @@ app.factory('votes', function ($http) {
   var path    = './vote',
       factory = {};
 
-  factory.get = function (teamId) {
-    var vote = $http.get(path + '?teamId=' + teamId).then(function (resp) {
-      return resp.data;
-    });
-
-    return vote;
-  };
-
+  // Save the vote information
   factory.post = function (teamId, points) {
     var vote = $http.post(path, { teamId: teamId, points: points }).then(function (resp) {
       return resp.data;
