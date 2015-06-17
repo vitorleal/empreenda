@@ -26,9 +26,12 @@
 
       <md-toolbar data-ng-hide="loader" class="mb" data-ng-repeat="team in teams">
         <div class="md-toolbar-tools">
-          <span>
-            <strong>{[{ $index + 1 }]}° {[{ team.team.name }]} - {[{ team.points }]} pontos</strong>
-          </span>
+          <md-button class="md-fab md-mini md-accent mr" aria-label="Colocação">
+            <span>{[{ $index + 1 }]}°</span>
+          </md-button>
+
+          <span>{[{ team.team.name }]} <small class="md-subhead">({[{ team.points }]} pontos)</small></span>
+
         </div>
       </md-toolbar>
 

@@ -3,7 +3,8 @@ var app = angular.module('empreendaAppAdmin', ['ngMaterial']);
 // Config
 app.config(function ($mdThemingProvider, $interpolateProvider) {
   $mdThemingProvider.theme('default')
-    .primaryPalette('red');
+    .primaryPalette('blue-grey')
+    .accentPalette('teal');
 
   // Interpolate angular symbols as {[{ }]}
   $interpolateProvider.startSymbol('{[{');
