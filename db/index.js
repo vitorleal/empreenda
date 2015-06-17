@@ -15,7 +15,7 @@ var sessionManager = {
   secret: configs.SECRET,
   store: new connectMongo({
     url: configs.MONGOURL,
-    ttl: 7 * 24 * 60 * 60
+    ttl: 14 * 24 * 60 * 60
   })
 };
 
