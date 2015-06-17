@@ -47,7 +47,6 @@ app.post('/team', routes.team.post);
 app.post('/user', routes.user.post);
 
 // Vote
-app.get('/vote', routes.vote.get);
 app.post('/vote', routes.vote.post);
 
 // Admin
