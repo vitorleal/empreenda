@@ -11,12 +11,17 @@
   overflow: auto;
 }
 
-.list-content {
+.app-content {
   padding: 30px 60px;
 }
 
 .login-content {
   padding: 30px 22%;
+}
+
+.fixed-footer {
+  position: fixed;
+  bottom: 0;
 }
 
 md-backdrop.md-opaque.md-default-theme {
@@ -25,6 +30,10 @@ md-backdrop.md-opaque.md-default-theme {
 
 .points-content span {
   padding: 10px 12px;
+}
+
+.mt {
+  margin-top: 20px;
 }
 
 .mb {

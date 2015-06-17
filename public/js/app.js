@@ -1,45 +1,40 @@
-var app = angular.module('empreendaApp', ['ngMaterial']);
+var app = angular.module('empreendaApp', ['ngRoute', 'ngMaterial']);
 
 // Config
-app.config(function ($interpolateProvider) {
+app.config(function ($interpolateProvider, $routeProvider) {
   // Interpolate angular symbols as {[{ }]}
   $interpolateProvider.startSymbol('{[{');
   $interpolateProvider.endSymbol('}]}');
+
+  $routeProvider
+    .when('/', {
+      templateUrl: 'team-list.html',
+      controller: 'ListController',
+      resolve: {
+        teamList: function (teamService) {
+          var list = teamService.getAll();
+
+          return list;
+        }
+      }
+    })
+    .when('/vote/:team', {
+      templateUrl: 'vote.html',
+      controller: 'VoteController',
+      resolve: {
+        vote: function ($route, voteService) {
+          var vote = voteService.getByTeam($route.current.params.team);
+
+          return vote;
+        }
+      }
+    });
 });
 
 
 /** ------------
    Controller
 ---------------- */
-
-// Login Controller
-app.controller('LoginController', function ($scope, $mdDialog, login) {
-  $scope.auth = function () {
-    var auth = login.auth($scope.email);
-
-    // Try to authenticate the user by email
-    auth.then(function (resp) {
-      if (!resp.auth) {
-        // If user not found show alert message
-        var alert = $mdDialog.alert({
-          parent: angular.element(document.body),
-          title: 'Email não encontrado',
-          content: 'O email '+ $scope.email +' não está cadastrado na plataforma.',
-          ok: 'fechar'
-        });
-
-        $mdDialog.show(alert);
-      }
-
-      // If user exist redirect to the main content
-      if (resp.auth) {
-        window.location.replace('/');
-      }
-    });
-  };
-});
-
-
 // Header Controller
 app.controller('HeaderController', function ($scope, $mdDialog) {
   // Logout user
@@ -62,109 +57,45 @@ app.controller('HeaderController', function ($scope, $mdDialog) {
 
 
 // Main Controller
-app.controller('ListController', function ($scope, $mdDialog, teams, votes) {
-  var getTeams = teams.getAll();
-
-  // Show loader
-  $scope.loader = true;
-
-  // get the teams data
-  getTeams.then(function (resp) {
-    $scope.teams = resp.teams;
-    $scope.loader = false;
-  });
-
-  // Calculate total
-  $scope.calculateTotal = function (votes) {
-    if (votes && votes.length) {
-      var points = votes[0].points,
-          total  = points.originality +
-            points.presentation +
-            points.potential +
-            points.viability +
-            points.appeal +
-            points.adherence;
-
-      return total;
-
-    } else {
-      return 0;
-    }
-  };
+app.controller('ListController', function ($scope, $mdDialog, $location, teamList) {
+  $scope.teams = teamList.teams;
 
   // Vote in a team
-  $scope.openDialog = function (team) {
-    // Create the vote dialog
-    var dialog = $mdDialog.show({
-      controller: VoteController,
-      templateUrl: 'dialog-vote.html',
-      parent: angular.element(document.body),
-      locals: {
-        team: team
-      }
-    });
-
-    // Returning from the dialog confirm
-    dialog.then(function (data) {
-      var getTeams = teams.getAll();
-      // get the teams data
-      getTeams.then(function (resp) {
-        $scope.teams = resp.teams;
-      });
-    });
+  $scope.vote = function (team) {
+    $location.url('/vote/' + team._id);
   };
 });
 
 
 // Vote Controller
-function VoteController ($scope, $mdDialog, votes, team) {
-  $scope.team = team;
-
-  var points = (team.votes && team.votes.length) ? team.votes[0].points : null;
-
-  $scope.points = {
-    originality: (points) ? points.originality : 0,
-    presentation: (points) ? points.presentation : 0,
-    potential: (points) ? points.potential : 0,
-    viability: (points) ? points.viability : 0,
-    appeal: (points) ? points.appeal : 0,
-    adherence: (points) ? points.adherence : 0
-  };
+app.controller('VoteController', function ($scope, $mdDialog, voteService, vote, $location) {
+  $scope.team = vote.team;
+  $scope.points = vote.points;
 
   // Calculate the total points
-  $scope.calculateTotal = function () {
-    var total = $scope.points.originality +
-      $scope.points.presentation +
-      $scope.points.potential +
-      $scope.points.viability +
-      $scope.points.appeal +
-      $scope.points.adherence;
-
-    return total;
-  };
-
-  $scope.calculateTotal();
-
   // Cancel voting
   $scope.cancel = function () {
-    $mdDialog.cancel();
+    $location.url('/');
   };
 
   // Save voting
   $scope.save = function () {
-    var vote = votes.post(team._id, $scope.points);
+    $scope.loader = true;
+
+    var vote = voteService.post($scope.team._id, $scope.points);
 
     vote.then(function () {
       // after saving close the dialog
-      $mdDialog.hide();
+      $location.url('/');
     });
   };
-}
+});
 
 
 /** ------------
    Directive
 ---------------- */
+// Show points label
 app.directive('pointLabel', function () {
   return {
     restrict: 'E',
@@ -186,30 +117,45 @@ app.directive('pointLabel', function () {
   };
 });
 
+// Calculate points
+app.directive('calculateTotal', function () {
+  return {
+    restrict: 'E',
+    replace: true,
+    template: '<span>{{ total }}</span>',
+    scope: {
+      points: '=',
+      showMax: '='
+    },
+    link: function (scope, element, attrs) {
+      if (scope.points) {
+        scope.$watchCollection('points', function () {
+          var total = scope.points.originality +
+            scope.points.presentation +
+            scope.points.potential +
+            scope.points.viability +
+            scope.points.appeal +
+            scope.points.adherence;
+
+          if (scope.showMax) {
+            total += '/30';
+          }
+
+          scope.total = total;
+        });
+
+      } else {
+        scope.total = 0;
+      }
+    }
+  };
+});
 
 /** ------------
     Factory
 ---------------- */
-// Login
-app.factory('login', function ($http) {
-  var path = './login',
-      factory = {};
-
-  // Login by email
-  factory.auth = function (email) {
-    var login = $http.post(path, { email: email }).then(function (resp) {
-      return resp.data;
-    });
-
-    return login;
-  };
-
-  return factory;
-});
-
-
 // Team
-app.factory('teams', function ($http) {
+app.factory('teamService', function ($http) {
   var path    = './team/all',
       factory = {};
 
@@ -227,11 +173,18 @@ app.factory('teams', function ($http) {
 
 
 // Vote
-app.factory('votes', function ($http) {
+app.factory('voteService', function ($http) {
   var path    = './vote',
       factory = {};
 
-  // Save the vote information
+  factory.getByTeam = function (team) {
+    var vote = $http.get(path + '/' + team).then(function (resp) {
+      return resp.data;
+    });
+
+    return vote;
+  };
+
   factory.post = function (teamId, points) {
     var vote = $http.post(path, { teamId: teamId, points: points }).then(function (resp) {
       return resp.data;

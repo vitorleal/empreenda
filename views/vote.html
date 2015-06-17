@@ -1,0 +1,64 @@
+<script type="text/ng-template" id="vote.html">
+  <md-toolbar layout-padding layout-align="center center" layout="row">
+    <span class="dialog-title">{[{ team.name }]}</span>
+
+    <span flex></span>
+
+    <span class="mr">
+      <calculate-total points="points" show-max="true"></calculate-total>
+    </span>
+  </md-toolbar>
+
+  <div class="mt" data-ng-show="loader" layout="row" layout-align="space-around">
+    <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+  </div>
+
+  <div data-ng-hide="loader">
+    <md-content class="app-content" layout-padding>
+      <div layout-padding>
+        <p layout="row">
+          <label>Originalidade</label> <span flex></span> <point-label data="points.originality"></point-label>
+        </p>
+        <md-slider aria-label="originalidade" md-discrete ng-model="points.originality" step="1" min="0" max="5"></md-slider>
+
+        <p layout="row">
+          <label>Apresentação / Pitch</label> <span flex></span> <point-label data="points.presentation"></point-label>
+        </p>
+        <md-slider aria-label="apresentação" md-discrete ng-model="points.presentation" step="1" min="0" max="5"></md-slider>
+
+        <p layout="row">
+          <label>Potencial da Idéia</label> <span flex></span> <point-label data="points.potential"></point-label>
+        </p>
+        <md-slider aria-label="potencial" md-discrete ng-model="points.potential" step="1" min="0" max="5"></md-slider>
+
+        <p layout="row">
+          <label>Viabilidade Econômica</label> <span flex></span> <point-label data="points.viability"></point-label>
+        </p>
+        <md-slider aria-label="viabilidade" md-discrete ng-model="points.viability" step="1" min="0" max="5"></md-slider>
+
+        <p layout="row">
+          <label>Apelo Comercial</label><span flex></span> <point-label data="points.appeal"></point-label>
+        </p>
+        <md-slider aria-label="apelo comercial" md-discrete ng-model="points.appeal" step="1" min="0" max="5"></md-slider>
+
+        <p layout="row">
+          <label>Aderência a Telefonica Vivo</label><span flex></span> <point-label data="points.adherence"></point-label>
+        </p>
+        <md-slider aria-label="aderência" md-discrete ng-model="points.adherence" step="1" min="0" max="5"></md-slider>
+      </div>
+
+      <div layout="collumn" layout-align="center center">
+        <md-button class="mr" data-ng-click="cancel()" class="md-primary">Cancelar </md-button>
+        <md-button data-ng-click="save()" class="md-primary md-raised">Salvar</md-button>
+      </div>
+    </md-content>
+
+    <md-toolbar class="fixed-footer" layout-padding layout-align="center center" layout="row">
+      <div layout="collumn" layout-align="center center">
+        <md-button class="mr" data-ng-click="cancel()" class="md-primary">Cancelar </md-button>
+        <md-button data-ng-click="save()" class="md-accent md-raised">Salvar</md-button>
+      </div>
+    </md-toolbar>
+  </div>
+</script>
+

@@ -1,0 +1,24 @@
+<script type="text/ng-template" id="team-list.html">
+  <md-content class="app-content" layout-padding>
+    <div data-ng-show="loader" layout="row" layout-align="space-around">
+      <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+    <md-toolbar data-ng-hide="loader" class="mb" data-ng-repeat="team in teams">
+      <div class="md-toolbar-tools">
+        <md-button class="md-fab md-mini md-accent mr" data-ng-click="openDialog(team)" aria-label="Pontos">
+          <small>
+            <calculate-total points="team.votes[0].points"></calculate-total>
+          </small>
+        </md-button>
+
+        <span>{[{ team.name }]}</span>
+
+        <span flex></span>
+
+        <md-button class="md-raised" data-ng-click="vote(team)">Votar</md-button>
+      </div>
+    </md-toolbar>
+  </md-content>
+</script>
+
