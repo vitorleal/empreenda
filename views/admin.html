@@ -24,7 +24,7 @@
         <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
       </div>
 
-      <div data-ng-hide="loader" class="mbb" data-ng-repeat="team in teams">
+      <div data-ng-hide="loader" class="mb" data-ng-repeat="team in teams">
         <md-toolbar>
           <div class="md-toolbar-tools">
             <md-button class="md-fab md-mini md-accent mr" aria-label="Colocação">
@@ -38,14 +38,6 @@
             <small class="md-subhead"><point-label data="team.points"></point-label></small>
           </div>
         </md-toolbar>
-        <md-whiteframe class="md-whiteframe-z2 points-content" layout-padding layout layout-align="center center">
-          <span>Originalidade: <strong>{[{ team.originality }]}</strong></span>
-          <span>Apresentação: <strong>{[{ team.presentation }]}</strong></span>
-          <span>Potencial: <strong>{[{ team.potential }]}</strong></span>
-          <span>Viabilidade: <strong>{[{ team.viability }]}</strong></span>
-          <span>Apelo: <strong>{[{ team.appeal }]}</strong></span>
-          <span>Aderência: <strong>{[{ team.adherence }]}</strong></span>
-        </md-whiteframe>
       </div>
     </md-content>
   </div>

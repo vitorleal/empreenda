@@ -35,30 +35,16 @@ routes.data = function adminData (req, res) {
       },
       adherence: {
         $sum: '$points.adherence'
+      },
+      voteCount: {
+        $sum: 1
       }
     }
   }, {
     $project: {
       _id: 0,
       team: 1,
-      originality: {
-        $add: '$originality'
-      },
-      presentation: {
-        $add: '$presentation'
-      },
-      potential: {
-        $add: '$potential'
-      },
-      viability: {
-        $add: '$viability'
-      },
-      appeal: {
-        $add: '$appeal'
-      },
-      adherence: {
-        $add: '$adherence'
-      },
+      voteCount: 1,
       points: {
         $add: [
           '$originality',
@@ -68,6 +54,14 @@ routes.data = function adminData (req, res) {
           '$appeal',
           '$adherence'
         ]
+      }
+    }
+  }, {
+    $project: {
+      team: 1,
+      voteCount: 1,
+      points: {
+        $divide: ["$points", "$voteCount"]
       }
     }
   }, {
