@@ -43,10 +43,10 @@ app.directive('pointLabel', function () {
     },
     link: function (scope, element, attrs) {
       if (scope.data == 1) {
-        scope.value = scope.data + ' ponto';
+        scope.value = scope.data.toFixed(1) + ' ponto';
 
       } else {
-        scope.value = scope.data + ' pontos';
+        scope.value = scope.data.toFixed(1) + ' pontos';
       }
     }
   };
