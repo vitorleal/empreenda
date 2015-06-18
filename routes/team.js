@@ -1,4 +1,6 @@
-var Team = require('../db/team');
+var Team = require('../db/team'),
+    Vote = require('../db/vote'),
+    mongoose = require('mongoose');
 
 
 // Team
@@ -17,6 +19,7 @@ var team = {
 
     res.send({ saved: true });
   },
+
   getAll: function getAllTeams (req, res) {
     Team.find({}).populate({
       path: 'votes',
@@ -28,7 +31,33 @@ var team = {
         limit: 1
       }
     }).sort('order').exec(function (err, result) {
-      return res.send({ teams: result });
+      Vote.aggregate([{
+        $match: {
+          user: new mongoose.Types.ObjectId(req.cookies.userId)
+        }
+      }, {
+        $project: {
+          _id: '$team',
+          totalPonts: {
+            $add: [
+              '$points.originality',
+              '$points.presentation',
+              '$points.potential',
+              '$points.viability',
+              '$points.appeal',
+              '$points.adherence'
+            ]
+          }
+        }
+      }, {
+        $sort: {
+          totalPonts: -1
+        }
+      }, {
+        $limit: 3
+      }], function (err, votes) {
+        res.send({ teams: result, preferred: votes });
+      });
     });
   }
 };

@@ -6,7 +6,7 @@
 
     <md-toolbar data-ng-hide="loader" class="mb" data-ng-repeat="team in teams">
       <div class="md-toolbar-tools">
-        <md-button class="md-fab md-mini md-accent mr" data-ng-click="openDialog(team)" aria-label="Pontos">
+        <md-button ng-class="{ preferred: (team['_id'] | prefFilter:preferred) }" class="md-fab md-mini md-accent mr" data-ng-click="openDialog(team)" aria-label="Pontos">
           <small>
             <calculate-total points="team.votes[0].points"></calculate-total>
           </small>

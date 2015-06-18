@@ -59,6 +59,9 @@ app.controller('HeaderController', function ($scope, $mdDialog) {
 // Main Controller
 app.controller('ListController', function ($scope, $mdDialog, $location, teamList) {
   $scope.teams = teamList.teams;
+  $scope.preferred = teamList.preferred.map(function (team) {
+    return team._id;
+  });
 
   // Vote in a team
   $scope.vote = function (team) {
@@ -150,6 +153,24 @@ app.directive('calculateTotal', function () {
     }
   };
 });
+
+
+//Filter
+app.filter('prefFilter', function () {
+  return function(team, list) {
+    console.log(team);
+    console.log(list);
+
+    if (list.indexOf(team) !== -1) {
+      console.log(true);
+      return true;
+
+    } else {
+      return false;
+    }
+  };
+});
+
 
 /** ------------
     Factory
